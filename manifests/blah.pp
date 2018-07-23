@@ -62,7 +62,7 @@ class creamce::blah inherits creamce::params {
   
   }
   
-  Package <| tag == 'creamcepackages' |> -> File <| tag == 'blahconffiles' |>
+  Package <| tag == 'tomcatcefiles' |> -> File <| tag == 'blahconffiles' |>
 
   # ##################################################################################################
   # Service management

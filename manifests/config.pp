@@ -421,7 +421,15 @@ class creamce::config inherits creamce::params {
   create_resources(file, $sb_definitions)
   Package <| tag == 'creamcepackages' |> -> File["$cream_db_sandbox_path"]
   File["$cream_db_sandbox_path"] -> File <| tag == 'creamce::sandboxdirs' |>
-  
+
+  file { "/var/log/cream":
+    ensure => directory,
+    owner  => "tomcat",
+    group  => "tomcat",
+    mode   => '0775',
+    tag    => [ "tomcatcefiles" ],
+  }
+
   file{"/etc/sysconfig/edg":
     ensure  => present,
     owner   => "root",
