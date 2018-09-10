@@ -143,24 +143,15 @@ class creamce::torque inherits creamce::params {
 
   }
 
-  define queue_member ($queue, $group) {
-      
-    exec { "${title}":
-      command => "/usr/bin/qmgr -c \"set queue ${queue} acl_groups += ${group}\"",
-      unless  => "/usr/bin/qmgr -c \"list queue ${queue} acl_groups\" | awk '/acl_groups/,EOF {print \$NF}'| grep -qwi ${group}",
-    }
-      
-  }
-
   if $torque_config_pool {    
 
     $queue_group_table = build_queue_group_tuples($grid_queues)
     
-    create_resources(queue_member, $queue_group_table)
+    create_resources(creamce::torquemember, $queue_group_table)
     
     if $torque_config_client and $istorqueinstalled == "false" {
 
-      Service["munge", "trqauthd"] -> Queue_member <| |>
+      Service["munge", "trqauthd"] -> Creamce::Torquemember <| |>
 
     }
     

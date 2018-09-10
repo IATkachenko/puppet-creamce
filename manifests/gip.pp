@@ -108,29 +108,10 @@ class creamce::gip inherits creamce::params {
     mode   => '0755',
   }
   
-  define tagspace ($pub_dir, $a_owner, $a_group) {
-  
-    file { "${pub_dir}/${title}":
-      ensure  => directory,
-      owner   => "${a_owner}",
-      group   => "${a_group}",
-      mode    => '0755',
-    }
-
-    file { "${pub_dir}/${title}/${title}.list":
-      ensure  => file,
-      owner   => "${a_owner}",
-      group   => "${a_group}",
-      mode    => '0644',
-      require => File["${pub_dir}/${title}"],
-    }
-
-  }
-  
   $tagdir_defs = build_tagdir_definitions($voenv, $gridft_pub_dir, $username_offset)
-  create_resources(tagspace, $tagdir_defs)
+  create_resources(creamce::tagspace, $tagdir_defs)
   
-  File["${gridft_pub_dir}"] -> Tagspace <| |>
+  File["${gridft_pub_dir}"] -> Creamce::Tagspace <| |>
   
   # ##################################################################################################
   # common plugin 

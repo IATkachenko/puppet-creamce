@@ -85,7 +85,7 @@ class creamce::config inherits creamce::params {
 
   }
   
-  #Creamce::Poolaccount::Pooluser <| |> -> File["/etc/sudoers.d/50_cream_users"]
+  #Creamce::Pooluser <| |> -> File["/etc/sudoers.d/50_cream_users"]
 
   # ##################################################################################################
   # Glexec setup
@@ -157,35 +157,6 @@ class creamce::config inherits creamce::params {
     mode    => '0755',
   }
   
-  define vofiles ($server, $port, $dn, $ca_dn, $gtversion, $voname, $vodir) {
-  
-    $lscfile_content = "${dn}\n${ca_dn}\n"
-    file { "${vodir}/${voname}/${server}.lsc":
-      ensure  => file,
-      owner   => "root",
-      group   => "root",
-      mode    => '0644',
-      content => "${lscfile_content}",
-      require => File["${vodir}/${voname}"],
-      tag     => [ "vomscefiles" ],
-    }
-    
-    # maybe we can use the voname for nickname
-    $nickname = $title
-    
-    $vomsfile_content = "\"${nickname}\" \"${server}\" \"${port}\" \"${dn}\" \"${voname}\" \"${gtversion}\"\n"
-    file { "/etc/vomses/${voname}-${server}":
-      ensure  => file,
-      owner   => "root",
-      group   => "root",
-      mode    => '0644',
-      content => "${vomsfile_content}",
-      require => File["/etc/vomses"],
-      tag     => [ "vomscefiles" ],
-    }    
-    
-  }
-  
   $vopaths = prefix(keys($voenv), "${voms_dir}/")
   file { $vopaths:
     ensure  => directory,
@@ -196,7 +167,7 @@ class creamce::config inherits creamce::params {
   }
   
   $vo_table = build_vo_definitions($voenv, "${voms_dir}")
-  create_resources(vofiles, $vo_table)
+  create_resources(creamce::vofiles, $vo_table)
 
   # ##################################################################################################
   # Database setup

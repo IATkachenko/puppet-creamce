@@ -1,45 +1,5 @@
 class creamce::poolaccount inherits creamce::params {
 
-  define pooluser ($uid, $groups, $gridmapdir, $comment,
-                   $homedir="/home", $shell="/bin/bash", $create_usr=true) {
-  
-    if $create_usr {
-    
-      user { "${title}":
-        ensure     => "present",
-        uid        => $uid,
-        gid        => "${groups[0]}",
-        groups     => $groups,
-        home       => "${homedir}/${title}",
-        managehome => true,
-        shell      => "${shell}"
-      }
-      
-      unless $comment == "" {
-        User["${title}"]{
-          comment    => "${comment}",
-        }
-      }
-    
-    } else {
-
-      notify { "${title}_fake":
-        message => "User ${title} not created",
-      }
-
-    }
-    
-    file { "${gridmapdir}/${title}":
-      ensure     => file,
-      owner      => "root",
-      group      => "root",
-      mode       => '0644',
-      content    => "",
-      require    => File["${gridmapdir}"]
-    }
-
-  }
-  
   package { [ "cleanup-grid-accounts", "lcg-expiregridmapdir" ]:
     ensure => present,
     tag    => [ "poolaccountpackages", "umdpackages" ],
@@ -62,14 +22,14 @@ class creamce::poolaccount inherits creamce::params {
   
   $user_table = build_user_definitions($voenv, $gridmap_dir, $default_pool_size,
                                        $username_offset, $create_user)
-  create_resources(pooluser, $user_table)
+  create_resources(creamce::pooluser, $user_table)
 
   notify { "pool_checkpoint":
     message => "Pool groups defined",
   }
 
   Group <| tag == 'creamce::poolgroup' |> -> Notify["pool_checkpoint"]
-  Notify["pool_checkpoint"] -> Pooluser <| |>
+  Notify["pool_checkpoint"] -> Creamce::Pooluser <| |>
   
   file { "/etc/cleanup-grid-accounts.conf":
     ensure   => file,
