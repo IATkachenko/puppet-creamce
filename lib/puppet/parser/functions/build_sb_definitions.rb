@@ -13,7 +13,7 @@ module Puppet::Parser::Functions
           'ensure'    => "directory",
           'owner'     => "tomcat",
           'group'     => group,
-          'mode'      => 0770,
+          'mode'      => '0770',
           'tag'       => [ 'creamce::sandboxdirs' ],
         }
       end

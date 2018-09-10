@@ -276,13 +276,13 @@ class creamce::config inherits creamce::params {
   $enc_min_password = mysql_password("${cream_db_minpriv_password}")
   
   mysql_user { [ "${cream_db_user}@${access_pattern}", "${cream_db_user}@localhost" ]:
-    ensure        => $ensure,
+    ensure        => present,
     password_hash => $enc_std_password,
     require       => Class['mysql::server'],
   }
   
   mysql_user { [ "${cream_db_minpriv_user}@${access_pattern}", "${cream_db_minpriv_user}@localhost" ]:
-    ensure        => $ensure,
+    ensure        => present,
     password_hash => $enc_min_password,
     require       => Class['mysql::server'],
   }

@@ -15,7 +15,7 @@ class creamce::gridftp inherits creamce::params {
   
   class{ "gridftp::config":
     require => Package["globus-proxy-utils", "kill-stale-ftp", "${gridftp_auth_plugin}"],
-    notify  => Class[Gridftp::Service],
+    notify  => Class["Gridftp::Service"],
   }
   
   if $use_argus {
@@ -27,8 +27,8 @@ class creamce::gridftp inherits creamce::params {
       group   => "root",
       mode    => '0644',
       content => "globus_mapping /usr/lib64/libgsi_pep_callout.so argus_pep_callout\n",
-      require => Class[Gridftp::Config],
-      notify  => Class[Gridftp::Service],
+      require => Class["Gridftp::Config"],
+      notify  => Class["Gridftp::Service"],
     }
   
     file { "/etc/grid-security/gsi-pep-callout.conf":
@@ -37,8 +37,8 @@ class creamce::gridftp inherits creamce::params {
       group   => "root",
       mode    => '0644',
       content => template("creamce/gsi-pep-callout.conf.erb"),
-      require => Class[Gridftp::Config],
-      notify  => Class[Gridftp::Service],
+      require => Class["Gridftp::Config"],
+      notify  => Class["Gridftp::Service"],
     }
 
   } else {
@@ -54,15 +54,15 @@ class creamce::gridftp inherits creamce::params {
       group   => "root",
       mode    => '0644',
       content => "globus_mapping /usr/lib64/liblcas_lcmaps_gt4_mapping.so lcmaps_callout\n",
-      require => Class[Gridftp::Config],
-      notify  => Class[Gridftp::Service],
+      require => Class["Gridftp::Config"],
+      notify  => Class["Gridftp::Service"],
     }
 
   }
   
   package { ["globus-proxy-utils", "kill-stale-ftp", "${gridftp_auth_plugin}"]:
     ensure  => present,
-    require => Class[Gridftp::Install],
+    require => Class["Gridftp::Install"],
     tag     => [ "gridftppackages", "umdpackages" ],
   }
   
