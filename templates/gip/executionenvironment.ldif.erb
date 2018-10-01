@@ -1,5 +1,6 @@
 <%
-now=Time.now.utc.strftime("%FT%T%Z").gsub(/GMT/,'Z').gsub(/UTC/,'Z')
+startepoch=Time.now.to_i - @uptime_seconds.to_i
+starttime=Time.at(startepoch).utc.strftime("%Y-%m-%dT%H:%M:00")
 
 @cluster_list.each do | cdata |
 
@@ -8,7 +9,7 @@ dn: GLUE2ResourceID=<%=cdata["id"]-%>,GLUE2ServiceID=<%=@computing_service_id-%>
 objectClass: GLUE2Entity
 objectClass: GLUE2Resource
 objectClass: GLUE2ExecutionEnvironment
-GLUE2EntityCreationTime: <%=now%>
+GLUE2EntityCreationTime: <%=starttime%>
 GLUE2EntityName: <%=cdata["id"]%>
 GLUE2EntityOtherInfo: InfoProviderName=glite-ce-glue2-executionenvironment-static
 GLUE2EntityOtherInfo: InfoProviderVersion=1.1
@@ -54,7 +55,7 @@ GLUE2ExecutionEnvironmentApplicationEnvironmentForeignKey: <%=apptag%>
 dn: GLUE2AcceleratorEnvironmentID=<%=acc_id-%>,GLUE2ServiceID=<%=@computing_service_id-%>,GLUE2GroupID=resource,o=glue
 objectClass: GLUE2Entity
 objectClass: GLUE2AcceleratorEnvironment
-GLUE2EntityCreationTime: <%=now%>
+GLUE2EntityCreationTime: <%=starttime%>
 GLUE2EntityName: <%=acc_id%>
 GLUE2AcceleratorEnvironmentID: <%=acc_id%>
 GLUE2AcceleratorEnvironmentType: <%=acc_data["type"]%>
@@ -77,7 +78,7 @@ GLUE2AcceleratorEnvironmentExecutionEnvironmentForeignKey: <%=cdata["id"]%>
 dn: GLUE2ApplicationEnvironmentID=<%=apptag-%>,GLUE2ServiceID=<%=@computing_service_id-%>,GLUE2GroupID=resource,o=glue
 objectClass: GLUE2Entity
 objectClass: GLUE2ApplicationEnvironment
-GLUE2EntityCreationTime: <%=now%>
+GLUE2EntityCreationTime: <%=starttime%>
 GLUE2EntityOtherInfo: InfoProviderName=glite-ce-glue2-executionenvironment-static
 GLUE2EntityOtherInfo: InfoProviderVersion=1.1
 GLUE2EntityOtherInfo: InfoProviderHost=<%=@ce_host%>

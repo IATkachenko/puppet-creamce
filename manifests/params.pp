@@ -93,7 +93,7 @@ class creamce::params {
   $tomcat_cert               = hiera('creamce::tomcat::cert', '/etc/grid-security/tomcat-cert.pem')
   $tomcat_key                = hiera('creamce::tomcat::key', '/etc/grid-security/tomcat-key.pem')
   $java_opts                 = hiera('creamce::java_opts','-Xms512m -Xmx2048m')
-
+  $tomcat_shut_pwd           = hiera('creamce::tomcat::pwd', sha1("${cream_db_minpriv_password}"))
   
   #
   # BLAH/LRMS

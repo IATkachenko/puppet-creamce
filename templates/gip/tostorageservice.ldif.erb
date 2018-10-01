@@ -1,5 +1,6 @@
 <%
-now=Time.now.utc.strftime("%FT%T%Z").gsub(/GMT/,'Z').gsub(/UTC/,'Z')
+startepoch=Time.now.to_i - @uptime_seconds.to_i
+starttime=Time.at(startepoch).utc.strftime("%Y-%m-%dT%H:%M:00")
 @se_list.each do | sename, details |
   mount_point=details['mount_dir']
   export_dir=details['export_dir']
@@ -9,7 +10,7 @@ dn: GLUE2ToStorageServiceID=<%=@computing_service_id%>_<%=sename-%>,GLUE2Service
 objectClass: GLUE2Entity
 objectClass: GLUE2ToStorageService
 GLUE2ToStorageServiceID: <%=@computing_service_id%>_<%=sename%>
-GLUE2EntityCreationTime: <%=now%>
+GLUE2EntityCreationTime: <%=starttime%>
 GLUE2EntityOtherInfo: InfoProviderName=glite-ce-glue2-tostorageservice-static
 GLUE2EntityOtherInfo: InfoProviderVersion=1.1
 GLUE2EntityOtherInfo: InfoProviderHost=<%=@ce_host%>
