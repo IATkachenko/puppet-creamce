@@ -193,6 +193,8 @@ class creamce::params {
   $shosts_equiv_extras       = hiera("creamce::shosts_equiv_extras", [])
   $ssh_cron_sched            = hiera("creamce::ssh_cron_sched", "05 1,7,13,19 * * *")
 
+  $cream_config_sudo                 = lookup({'name' => 'creamce::config_sudo', 'default_value' => true})
+  $cream_config_sudo_install_package = lookup({'name' => 'creamce::config_sudo_install_package', 'default_value' => true})
 
   #
   # LCAS/LCMAPS/GLEXEC

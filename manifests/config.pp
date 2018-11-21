@@ -53,39 +53,44 @@ class creamce::config inherits creamce::params {
     tag     => [ "gridenvfiles" ],
   }
 
+  if $cream_config_sudo {
+
   # ##################################################################################################
   # Sudo setup
   # ##################################################################################################
 
-  $sudo_table = build_sudo_table($voenv, $default_pool_size, $username_offset)
+    $sudo_table = build_sudo_table($voenv, $default_pool_size, $username_offset)
 
-  package { "sudo":
-    ensure => present
-  }
+    if $cream_config_sudo_install_package {
+      package { "sudo":
+        ensure => present,
+        before => File['/etc/sudoers.d/50_cream_users'],
+      }
+    }
 
-  file { "/etc/sudoers.d/50_cream_users":
-    ensure  => file,
-    owner   => "root",
-    group   => "root",
-    mode    => '0440',
-    content => template("creamce/sudoers_forcream.erb"),
-    require => Package["sudo"],
-    tag     => [ "tomcatcefiles" ],
-  }
-
-  unless $sudo_logfile == "" {
-
-    file { "${sudo_logfile}":
+    file { "/etc/sudoers.d/50_cream_users":
       ensure  => file,
       owner   => "root",
       group   => "root",
-      mode    => '0640',      
+      mode    => '0440',
+      content => template("creamce/sudoers_forcream.erb"),
       tag     => [ "tomcatcefiles" ],
     }
 
-  }
+    unless $sudo_logfile == "" {
+
+      file { "${sudo_logfile}":
+        ensure  => file,
+        owner   => "root",
+        group   => "root",
+        mode    => '0640',      
+        tag     => [ "tomcatcefiles" ],
+      }
+
+    }
   
-  #Creamce::Pooluser <| |> -> File["/etc/sudoers.d/50_cream_users"]
+    #Creamce::Pooluser <| |> -> File["/etc/sudoers.d/50_cream_users"]
+  }
 
   # ##################################################################################################
   # Glexec setup
