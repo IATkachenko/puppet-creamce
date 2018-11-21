@@ -53,10 +53,12 @@ GLUE2ComputingShareMaxMainMemory: 444444
 GLUE2ComputingShareMaxVirtualMemory: 444444
 GLUE2ComputingShareGuaranteedMainMemory: 0
 GLUE2ComputingShareGuaranteedVirtualMemory: 0
-GLUE2ComputingShareMaxUserRunningJobs: 444444
 GLUE2ComputingShareMinCPUTime: 0
+<% if @batch_system != 'pbs' -%>
+GLUE2ComputingShareMaxUserRunningJobs: 444444
 GLUE2ComputingShareMaxTotalCPUTime: 444444
 GLUE2ComputingShareRequestedSlots: 444444
+<% end -%>
 GLUE2ComputingShareMaxMultiSlotWallTime: 999999999
 GLUE2ComputingShareMinWallTime: 0
 GLUE2ComputingShareExecutionEnvironmentForeignKey: <%=@ce_host%>
