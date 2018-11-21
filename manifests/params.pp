@@ -198,6 +198,7 @@ class creamce::params {
   
   $cream_config_sudo                 = lookup({'name' => 'creamce::config_sudo', 'default_value' => true})
   $cream_config_sudo_install_package = lookup({'name' => 'creamce::config_sudo_install_package', 'default_value' => true})
+  $cream_config_firewall     = lookup({'name' => 'creamce::config_firewall', 'default_value' => true})
 
   #
   # LCAS/LCMAPS/GLEXEC
