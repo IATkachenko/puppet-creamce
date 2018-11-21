@@ -195,6 +195,9 @@ class creamce::params {
   $cream_config_ssh          = lookup({'name' => "creamce::config_ssh", 'default_value' => false})
   $shosts_equiv_extras       = lookup({'name' => "creamce::shosts_equiv_extras", 'default_value' => []})
   $ssh_cron_sched            = lookup({'name' => "creamce::ssh_cron_sched", 'default_value' => "05 1,7,13,19 * * *"})
+  
+  $cream_config_sudo                 = lookup({'name' => 'creamce::config_sudo', 'default_value' => true})
+  $cream_config_sudo_install_package = lookup({'name' => 'creamce::config_sudo_install_package', 'default_value' => true})
 
   #
   # LCAS/LCMAPS/GLEXEC
