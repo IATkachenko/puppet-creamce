@@ -193,6 +193,7 @@ class creamce::params {
   $shosts_equiv_extras       = hiera("creamce::shosts_equiv_extras", [])
   $ssh_cron_sched            = hiera("creamce::ssh_cron_sched", "05 1,7,13,19 * * *")
 
+  $cream_config_firewall     = lookup({'name' => 'creamce::config_firewall', 'default_value' => true})
 
   #
   # LCAS/LCMAPS/GLEXEC
