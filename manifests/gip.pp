@@ -41,7 +41,7 @@ class creamce::gip inherits creamce::params {
     ensure  => "directory",
     owner   => "ldap",
     group   => "ldap",
-    mode    => '0755',
+    mode    => '0744',
     tag     => ['bdiisetup'],
   }
 
