@@ -2,14 +2,16 @@ class creamce::certificate inherits creamce::params {
 
   if $pki_support {
 
-    require fetchcrl
+    class { "fetchcrl":
+      runboot => false,
+      runcron => true,
+    }
     
     file { "${host_certificate}":
       ensure   => file,
       owner    => "root",
       group    => "root",
       mode     => '0644',
-      require  => Class['fetchcrl::config'],
     }
 
     file { "${host_private_key}":
@@ -17,15 +19,15 @@ class creamce::certificate inherits creamce::params {
       owner    => "root",
       group    => "root",
       mode     => '0400',
-      require  => Class['fetchcrl::config'],
     }
     
     exec { "initial_fetch_crl":
-      command => "fetch-crl -l ${cacert_dir} -o ${cacert_dir} || exit 0",
-      path    => "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin",
-      require => Class['fetchcrl::config'],
-      notify  => Class['fetchcrl::service'],
+      command => "/usr/sbin/fetch-crl -l ${cacert_dir} -o ${cacert_dir} || exit 0",
+      unless  => "/bin/ls ${cacert_dir}/*.r0",
     }
+
+    Class['fetchcrl'] -> File["${host_certificate}", "${host_private_key}"]
+    Class['fetchcrl'] -> Exec["initial_fetch_crl"]
 
   } else {
 
