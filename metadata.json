@@ -1,6 +1,6 @@
 {
   "name": "infnpd-creamce",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "author": "blah-cream@lists.infn.it",
   "summary": "This modules provides classes and definitions required to manage and properly configure an EMI creamce service.",
   "license": "Apache 2.0",
@@ -14,7 +14,7 @@
     {"name": "puppetlabs-mysql", "version_requirement": ">= 3.11.0 < 4.0.0"}
   ],
   "requirements": [
-    { "name": "puppet", "version_requirement": ">= 3.0.0" }
+    { "name": "puppet", "version_requirement": ">= 4.6.2" }
   ],
   "operatingsystem_support": [
      {"operatingsystem": "CentOS", "operatingsystemrelease": [ "7.0.1406" ]},

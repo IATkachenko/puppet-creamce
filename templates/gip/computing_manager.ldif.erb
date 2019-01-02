@@ -1,5 +1,6 @@
 <%
-now=Time.now.utc.strftime("%FT%T%Z").gsub(/GMT/,'Z').gsub(/UTC/,'Z')
+startepoch=Time.now.to_i - @uptime_seconds.to_i
+starttime=Time.at(startepoch).utc.strftime("%Y-%m-%dT%H:%M:00")
 
 ce_physcpu=0
 ce_logcpu=0
@@ -17,7 +18,7 @@ dn: GLUE2ManagerId=<%=@computing_service_id-%>_Manager,GLUE2ServiceID=<%=@comput
 objectClass: GLUE2Entity
 objectClass: GLUE2Manager
 objectClass: GLUE2ComputingManager
-GLUE2EntityCreationTime: <%=now%>
+GLUE2EntityCreationTime: <%=starttime%>
 GLUE2EntityName: Computing Manager on <%=@ce_host%>
 GLUE2ComputingManagerTotalPhysicalCPUs: <%=ce_physcpu%>
 GLUE2ComputingManagerTotalLogicalCPUs: <%=ce_logcpu%>

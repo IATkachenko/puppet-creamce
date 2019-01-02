@@ -96,7 +96,7 @@ class creamce::params {
   $tomcat_cert               = lookup({'name' => 'creamce::tomcat::cert', 'default_value' => '/etc/grid-security/tomcat-cert.pem'})
   $tomcat_key                = lookup({'name' => 'creamce::tomcat::key', 'default_value' => '/etc/grid-security/tomcat-key.pem'})
   $java_opts                 = lookup({'name' => 'creamce::java_opts', 'default_value' => '-Xms512m -Xmx2048m'})
-
+  $tomcat_shut_pwd           = lookup({'name' => 'creamce::tomcat::pwd', 'default_value' => sha1("${cream_db_minpriv_password}")})
   
   #
   # BLAH/LRMS

@@ -1,5 +1,6 @@
 <%
-now=Time.now.utc.strftime("%FT%T%Z").gsub(/GMT/,'Z').gsub(/UTC/,'Z')
+startepoch=Time.now.to_i - @uptime_seconds.to_i
+starttime=Time.at(startepoch).utc.strftime("%Y-%m-%dT%H:%M:00")
 epID=@ce_host + "_org.glite.ce.CREAM"
 
 @queue_vo_map.each do | queue, vodata |
@@ -10,7 +11,7 @@ dn: GLUE2ShareID=<%=share_id%>,GLUE2ServiceID=<%=@computing_service_id%>,GLUE2Gr
 objectClass: GLUE2Entity
 objectClass: GLUE2Share
 objectClass: GLUE2ComputingShare
-GLUE2EntityCreationTime: <%=now%>
+GLUE2EntityCreationTime: <%=starttime%>
 GLUE2EntityOtherInfo: CREAMCEId=<%=@ce_host-%>:<%=@ce_port-%>/<%=@ce_type-%>-<%=@batch_system-%>-<%=queue%>
 GLUE2EntityOtherInfo: ServiceType=org.glite.ce.CREAM
 GLUE2EntityOtherInfo: InfoProviderName=glite-ce-glue2-share-static
@@ -67,7 +68,7 @@ dn: GLUE2PolicyID=<%=share_id%>_policy,GLUE2ShareId=<%=share_id%>,GLUE2ServiceID
 objectClass: GLUE2Entity
 objectClass: GLUE2Policy
 objectClass: GLUE2MappingPolicy
-GLUE2EntityCreationTime: <%=now%>
+GLUE2EntityCreationTime: <%=starttime%>
 GLUE2EntityOtherInfo: InfoProviderName=glite-ce-glue2-share-static
 GLUE2EntityOtherInfo: InfoProviderVersion=1.1
 GLUE2EntityOtherInfo: InfoProviderHost=<%=@ce_host%>
