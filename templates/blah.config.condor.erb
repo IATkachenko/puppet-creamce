@@ -53,6 +53,9 @@ condor_nologaccess=
 
 condor_fallback=no
 
+<% if @condor_schedd_name != "" -%>
+condor_schedd_name=<%=condor_schedd_name%>
+<% end -%>
 
 # #############################################################################
 # BUpdater/BNotifier common variables
@@ -108,7 +111,7 @@ condor_batch_caching_enabled=yes
 batch_command_caching_filter=<%=@condor_caching_filter%>
 
 <% end -%>
-<% if@condor_user_history -%>
+<% if @condor_user_history -%>
 bupdater_use_condor_history=yes
 <% end -%>
 

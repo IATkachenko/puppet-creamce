@@ -181,6 +181,7 @@ class creamce::params {
   $condor_deploy_mode        = lookup({'name' => "condor::deployment_mode", 'default_value' => "queue_to_schedd"})
   $condor_queue_attr         = lookup({'name' => "condor::queue_attribute", 'default_value' => undef})
   $condor_conf_dir           = lookup({'name' => "condor::config::dir", 'default_value' => "/etc/condor/config.d"})
+  $condor_schedd_name        = lookup({'name' => "condor::schedd_name", 'default_value' => ""})
 
   $sge_master                = lookup({'name' => "gridengine::master", 'default_value' => "${::fqdn}"})
   $sge_master_port           = lookup({'name' => "gridengine::master_port", 'default_value' => 536})
