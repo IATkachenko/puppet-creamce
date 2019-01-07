@@ -37,14 +37,6 @@ class creamce::gip inherits creamce::params {
     tag     => ['bdiisetup'],
   }
 
-  file { "/var/lib/bdii/db":
-    ensure  => "directory",
-    owner   => "ldap",
-    group   => "ldap",
-    mode    => '0744',
-    tag     => ['bdiisetup'],
-  }
-
   file {"/etc/sysconfig/bdii":
     content => template('creamce/bdiisysconf.erb'),
     owner   => 'root',
