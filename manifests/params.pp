@@ -83,13 +83,10 @@ class creamce::params {
   #
   # Tomcat
   #
-  case $::lsbmajdistrelease {
-    "6": {
-      $tomcat                = "tomcat6"
-    }
-    default: {
-      $tomcat                = "tomcat"
-    }
+  if $::operatingsystem == "Scientific" and $::operatingsystemmajrelease in [ "6" ] {
+    $tomcat                  = "tomcat6"
+  } else {
+    $tomcat                  = "tomcat"
   }
   $catalina_home             = lookup({'name' => 'creamce::catalina::home', 'default_value' => "/usr/share/$tomcat"})
   $tomcat_server_lib         = lookup({'name' => 'creamce::catalina::server_lib', 'default_value' => "${catalina_home}/lib"})
@@ -102,13 +99,10 @@ class creamce::params {
   # BLAH/LRMS
   #
   $batch_system              = lookup("creamce::batch_system")
-  case $::lsbmajdistrelease {
-    "6": {
-      $blah_package          = "glite-ce-blahp"
-    }
-    default: {
-      $blah_package          = "BLAH"
-    }
+  if  $::operatingsystem == "Scientific" and $::operatingsystemmajrelease in [ "6" ] {
+    $blah_package            = "glite-ce-blahp"
+  } else {
+    $blah_package            = "BLAH"
   }
   $blah_config_file          = lookup({'name' => "blah::config_file", 'default_value' => "/etc/blah.config"})
   $blah_child_poll_timeout   = lookup({'name' => "blah::child_poll_timeout", 'default_value' => 200})
