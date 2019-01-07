@@ -42,7 +42,7 @@ class creamce::torque inherits creamce::params {
     
   }
   
-  if $use_blparser or $istorqueinstalled == "true" {
+  if $use_blparser or $istorqueinstalled {
 
     # realization of virtual resource Service["glite-ce-blah-parser"]
     File <| tag == 'blahconffiles' |> ~> Service <| tag == 'blahparserservice' |>
@@ -72,7 +72,7 @@ class creamce::torque inherits creamce::params {
     notify  => Service["bdii"],
   }
   
-  if $usemaui == "true" {
+  if $usemaui {
   
     file { "/var/spool/maui/maui.cfg":
       ensure  => present,
@@ -94,7 +94,7 @@ class creamce::torque inherits creamce::params {
   # TORQUE client
   # ##################################################################################################
   
-  if $torque_config_client and $istorqueinstalled == "false" {
+  if $torque_config_client and ! $istorqueinstalled {
   
     package { "munge":
       ensure  => present,
@@ -149,7 +149,7 @@ class creamce::torque inherits creamce::params {
     
     create_resources(creamce::torquemember, $queue_group_table)
     
-    if $torque_config_client and $istorqueinstalled == "false" {
+    if $torque_config_client and ! $istorqueinstalled {
 
       Service["munge", "trqauthd"] -> Creamce::Torquemember <| |>
 
