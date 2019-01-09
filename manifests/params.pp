@@ -132,7 +132,7 @@ class creamce::params {
   $torque_log_dir            = lookup({'name' => "torque::log_dir", 'default_value' => "/var/lib/torque/"})
   $torque_multiple_staging   = lookup({'name' => "torque::multiple_staging", 'default_value' => false})
   $torque_tracejob_logs      = lookup({'name' => "torque::tracejob_logs", 'default_value' => 2})
-  $torque_use_maui           = lookup({'name' => "torque::use_maui", 'default_value' => false})
+  $torque_config_maui        = lookup({'name' => "torque::configure_maui", 'default_value' => false})
   $torque_sched_opts         = lookup({'name' => "torque::sched_opts", 'default_value' => { "cycle_time" => "0" }})
   $torque_caching_filter     = lookup({'name' => "torque::command_caching_filter", 'default_value' => ""})
   $munge_key_path            = lookup({'name' => "munge::key_path", 'default_value' => ""})

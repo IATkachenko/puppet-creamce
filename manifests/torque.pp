@@ -72,7 +72,7 @@ class creamce::torque inherits creamce::params {
     notify  => Service["bdii"],
   }
   
-  if $usemaui {
+  if $torque_config_maui and $usemaui {
   
     file { "/var/spool/maui/maui.cfg":
       ensure  => present,
