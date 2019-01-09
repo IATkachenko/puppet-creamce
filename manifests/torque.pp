@@ -86,7 +86,7 @@ class creamce::torque inherits creamce::params {
     
   } else {
   
-    warning("Cannot detect Maui scheduler installation, please configure it manually")
+    warning("Maui scheduler configuration disabled, please configure it manually")
     
   }
   
