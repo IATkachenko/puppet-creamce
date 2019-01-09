@@ -13,7 +13,9 @@ The complete documentation for puppet is available [here](http://cream-guide.rea
 
 Install EPEL extension: `yum -y install epel-release`
 
-Install puppet: `yum -y install puppet`
+Install puppet 5 release: `yum -y localinstall https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm`
+
+Install puppet: `yum -y install puppet-agent`
 
 Check if the hostname and FQDN is correctly detected by puppet:
 ```
@@ -24,29 +26,29 @@ In the following examples the FQDN will be myhost.mydomain
 
 Install the CREAM CE module for puppet: `puppet module install infnpd-creamce`
 
-Create the required directories: `mkdir -p /etc/puppet/manifests /var/lib/hiera/node`
-
-Edit the file `/etc/puppet/manifests/site.pp` as:
+Edit the file `/etc/puppetlabs/code/environments/production/manifests/site.pp` as:
 ```
 node 'myhost.mydomain' {
   require creamce
 }
 ```
 
-Edit the file `/etc/hiera.yaml` as:
+Edit the file `/etc/puppetlabs/code/environments/production/hiera.yaml` as:
 ```
 ---
-:backends:
-  - yaml
-:hierarchy:
-  - "node/%{fqdn}"
-:yaml:
-  :datadir: /var/lib/hiera
+version: 5
+defaults:
+hierarchy:
+  - name: "Per-node data (yaml version)"
+    path: "nodes/%{::trusted.certname}.yaml"
+  - name: "Other YAML hierarchy levels"
+    paths:
+      - "common.yaml"
+      - "creamce.yaml"
 ```
 
-Link the hiera configuration to puppet: `ln -s /etc/hiera.yaml /etc/puppet/hiera.yaml`
-
-Edit the CREAM CE description file `/var/lib/hiera/node/myhost.mydomain.yaml`, an example of minimal configuration is:
+Edit the CREAM CE description file `/etc/puppetlabs/code/environments/production/data/creamce.yaml`, 
+an example of minimal configuration is:
 ```
 ---
 creamce::mysql::root_password :      mysqlp@$$w0rd
@@ -166,7 +168,7 @@ Deploy the host key in `/etc/grid-security/hostkey.pem`
 
 Deploy the host certificate in `/etc/grid-security/hostcert.pem`
 
-Run puppet: `puppet apply --verbose /etc/puppet/manifests/site.pp`
+Run puppet: `puppet apply --verbose /etc/puppetlabs/code/environments/production/manifests/site.pp`
 
 ## Managing the CREAM services
 

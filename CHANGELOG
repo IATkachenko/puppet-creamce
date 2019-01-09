@@ -1,3 +1,7 @@
+2019-01-07 Paolo Andreetto <paolo.andreetto@pd.infn.it>
+
+    * Porting to puppet 5
+
 2012-11-21 Ulrich Schwickerath <ulrich.schwickerath@cern.ch>
 
     * First Release
