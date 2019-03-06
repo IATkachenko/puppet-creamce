@@ -99,7 +99,7 @@ class creamce::params {
   # BLAH/LRMS
   #
   $batch_system              = lookup("creamce::batch_system")
-  if  $::operatingsystem == "Scientific" and $::operatingsystemmajrelease in [ "6" ] {
+  if $::operatingsystem in [ "Scientific", "CentOS" ] and $::operatingsystemmajrelease in [ "6" ] {
     $blah_package            = "glite-ce-blahp"
   } else {
     $blah_package            = "BLAH"
